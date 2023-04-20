@@ -40,7 +40,7 @@
         <div class="footer-container">
           <p>
             Published:
-            {{ date }}
+            {{ publishedAt | moment }}
           </p>
         </div>
       </div>
@@ -51,6 +51,7 @@
 <script>
 import Button from './button.vue';
 import BookmarkIcon from '../assets/vue-icons/bookmark-icon.vue';
+import moment from 'moment'
 export default {
   components: {
     Button,
@@ -66,11 +67,11 @@ export default {
     'isBookmarked',
     'id',
   ],
-  computed: {
-    date() {
-      return this.publishedAt
-    },
-  },
+  filters: {
+  moment: function (date) {
+    return moment(date).format('YYYY/MM/DD');
+  }
+},
   methods: {
     addToFav() {
       this.$emit('bookmark');

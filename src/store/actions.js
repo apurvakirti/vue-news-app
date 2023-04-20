@@ -14,17 +14,17 @@ function getCountryCode(name) {
 }
 
 export const actions = {
-  async fetchNews({state, commit}, fetchEverything = true) {
+  async fetchNews({state, commit}, {fetchEverything = true, onScroll = false}) {
     const code = getCountryCode(state.countryCode)
     try {
       commit('setLoader');
       commit('isError', false);
       const apiUrl = (fetchEverything ? 
-      `${CONFIG.BASE_URL}/everything?apiKey=${CONFIG.API_KEY}&q=${state.defaultQuery}&pageSize=9&page=${state.currentPage}` :
-      `${CONFIG.BASE_URL}/top-headlines?apiKey=${CONFIG.API_KEY}&category=${state.categoryName}&country=${code}&q=${state.searchKeyword}&pageSize=9&page=${state.currentPage}`)
+      `${CONFIG.BASE_URL}/everything?apiKey=${CONFIG.API_KEY}&q=${state.defaultQuery}&pageSize=${state.pageSize}&page=${state.currentPage}` :
+      `${CONFIG.BASE_URL}/top-headlines?apiKey=${CONFIG.API_KEY}&category=${state.categoryName}&country=${code}&q=${state.searchKeyword}&pageSize=${state.pageSize}&page=${state.currentPage}`)
       const res = await axios.get(apiUrl)
         commit('updateNewsItems', {
-          results: [...state.newsItems, ...res.data.articles],
+          results: onScroll ? [...state.newsItems, ...res.data.articles] : res.data.articles,
           totalResults: res.data.totalResults,
         });
       const totalPages = Math.ceil(

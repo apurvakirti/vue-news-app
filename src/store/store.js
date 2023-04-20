@@ -18,7 +18,8 @@ const store = new Vuex.Store({
     countryCode: "",
     error: "",
     defaultQuery: "politics",
-    totalResults: null
+    totalResults: null,
+    pageSize: 9
   },
   mutations,
   actions

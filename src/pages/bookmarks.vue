@@ -80,6 +80,13 @@
   }
 }
 
+
+@media only screen and (max-width: 768px) {
+  .bookmarks {
+    grid-template-columns: repeat(1, 100%);
+  }
+}
+
 @media only screen and (min-width: 992px) {
   .bookmarks {
     grid-template-columns: repeat(3, 1fr);

@@ -67,29 +67,31 @@
       window.removeEventListener("scroll", this.handleScroll);
     },
     methods: {
-      getNewsData(callApi = true) {
-        if(callApi) {
-          if (
-              this.$store.state.countryCode ||
-              this.$store.state.categoryName ||
-              this.$store.state.searchKeyword
-            ) {
-              this.$store.dispatch('fetchNews', false);
-              
-            } else {
-              this.$store.dispatch('fetchNews');
-            }
-        }
-            
-      },
       handleScroll() {
         const scrollHeight = document.documentElement.scrollHeight;
         const scrollTop = window.pageYOffset;
         const clientHeight = document.documentElement.clientHeight;
         const bottomThreshold = 100;
         if (scrollHeight - scrollTop - clientHeight < bottomThreshold && !this.$store.state.isLoading) {
-          this.$store.commit('updateCurrentPage');
-          this.getNewsData();
+          let isLastPage = Math.ceil(this.$store.state.totalResults / this.$store.state.pageSize) === this.$store.state.currentPage
+          if(!isLastPage) {
+            this.$store.commit('updateCurrentPage');
+          if (
+              this.$store.state.countryCode ||
+              this.$store.state.categoryName ||
+              this.$store.state.searchKeyword
+            ) {
+              this.$store.dispatch('fetchNews', {
+        fetchEverything: false, onScroll: true
+        });
+              
+            } else {
+              this.$store.dispatch('fetchNews', {
+        fetchEverything: true, onScroll: true
+        });
+            }
+          }
+          
         }
     },
       bookmarkNews(id) {

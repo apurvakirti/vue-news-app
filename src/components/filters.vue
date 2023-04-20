@@ -19,10 +19,10 @@
       placeholder="Keyword (optional)" />
     <div class="filter-btns">
       <Button @click="getNews">
-        <img src="../assets/icons/search.svg" alt="search-btn" />
+        <img src="../assets/icons/search.svg" alt="search-btn" style="margin-top: 1px;"/>
       </Button>
       <Button @click="resetFilter">
-        <img src="../assets/icons/reset-icon.svg" alt="reset-btn" />
+        <img src="../assets/icons/reset-icon.svg" alt="reset-btn" style="margin-top: 3px;"/>
       </Button>
     </div>
   </div>
@@ -75,10 +75,14 @@ export default {
         this.$store.state.categoryName ||
         this.$store.state.countryCode
       ) {
-        this.$store.dispatch('fetchNews', false);
+        this.$store.dispatch('fetchNews', {
+        fetchEverything: false, onScroll: false
+        });
 
       } else {
-        this.$store.dispatch('fetchNews');
+        this.$store.dispatch('fetchNews', {
+        fetchEverything: true, onScroll: false
+        });
       }
     },
     resetFilter() {

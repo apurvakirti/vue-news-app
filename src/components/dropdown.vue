@@ -98,7 +98,7 @@ export default {
   width: 95%;
   margin: 5px;
   color: #000;
-  padding: 5px;
+  padding: 10px;
 }
 .custom-select {
   position: relative;

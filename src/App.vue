@@ -27,7 +27,9 @@
       Loader,
     },
     mounted() {
-      this.$store.dispatch('fetchNews');
+      this.$store.dispatch('fetchNews', {
+        fetchEverything: true, onScroll: false
+        });
     },
     computed: {
       isHomePage() {
